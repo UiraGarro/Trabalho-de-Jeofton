@@ -29,6 +29,8 @@ class Calculadora:
         raiz = n1 ** (1/2)
         return raiz
     
+histórico = []
+
 while True:
     print("Bem-vindo(a) à Calculadora!")
     print("""Selecione uma operação:
@@ -41,14 +43,13 @@ while True:
     7. Radiciação"
     8. Mostrar histórico de operações
     9. Limpar histórico de operações""")
-    histórico = []
     
     try:
-        escolha = input("Digite sua escolha (1/2/3/4/5/6/7/8): ")
+        escolha = input("Digite sua escolha (1/2/3/4/5/6/7/8/9): ")
     
         if escolha in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
             if escolha == '7':
-                num1 = float(input("Digite seu número: "))
+                num1 = float(input("Digite o número da raiz: "))
                 num2 = 0
                 print(f"Raiz de {num1} = {Calculadora.radiciação(num1)}")
                 histórico.append(Calculadora.radiciação(num1))
@@ -57,9 +58,10 @@ while True:
                 print(histórico)
                 
             elif escolha == '9': histórico.clear()
-            else:
-                num1 = float(input("Digite seu primeiro número: "))
-                num2 = float(input("Digite seu segundo número: "))
+            
+            elif escolha in ['1', '2', '3', '4', '5', '6']:
+                num1 = float(input("Digite o primeiro número: "))
+                num2 = float(input("Digite o segundo número: "))
                 
             
                 if escolha == '1':
@@ -78,12 +80,12 @@ while True:
                     histórico.append(Calculadora.divisão(num1, num2))
                 
                 elif escolha == '5':
-                    print(f"Média de {num1} e {num2} = {Calculadora.media(num1, num2)}")
-                    histórico.append(Calculadora.media(num1, num2))
+                    print(f"Média de {num1} e {num2} = {Calculadora.média(num1, num2)}")
+                    histórico.append(Calculadora.média(num1, num2))
                     
                 elif escolha == '6':
-                    print(f"{num1} ^ {num2} = {Calculadora.potencia(num1, num2)}")
-                    histórico.append(Calculadora.potencia(num1, num2))    
+                    print(f"{num1} ^ {num2} = {Calculadora.potenciação(num1, num2)}")
+                    histórico.append(Calculadora.potenciação(num1, num2))    
             
         else:
             print("Escolha uma opção válida")
@@ -91,6 +93,6 @@ while True:
     except ValueError:
         print("Erro: Entrada inválida. Por favor, insira números válidos.")    
         
-    proxima_operação = input("Tentar Novamente? (s/n): ")
+    proxima_operação = input("Nova ação? (s/n): ")
     if proxima_operação.lower() != 's':
             break
