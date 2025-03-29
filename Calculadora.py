@@ -1,98 +1,99 @@
 class Calculadora:
+    
+    @staticmethod
     def soma(n1, n2):
-        soma = n1 + n2
-        return soma
-    
-    def subtração(n1, n2):
-        subtração = n1 - n2
-        return subtração
-    
-    def multiplicação(n1, n2):
-        multiplicação = n1 * n2
-        return multiplicação
-    
-    def divisão(n1, n2):
-        if n2 == 0:
-            return "Erro: Nõo é possível dividir por zero."
-        divisão = n1 / n2
-        return divisão
-    
-    def média(n1, n2):
-        média = (n1 + n2) / 2
-        return média
-    
-    def potenciação(n1, n2):
-        potenciação = n1 ** n2
-        return potenciação
-    
-    def radiciação(n1):
-        raiz = n1 ** (1/2)
-        return raiz
-    
-histórico = []
+        return n1 + n2
 
-while True:
-    print("Bem-vindo(a) à Calculadora!")
-    print("""Selecione uma operação:
+    @staticmethod
+    def subtracao(n1, n2):
+        return n1 - n2
+
+    @staticmethod
+    def multiplicacao(n1, n2):
+        return n1 * n2
+
+    @staticmethod
+    def divisao(n1, n2):
+        if n2 == 0:
+            return "Erro: Não é possível dividir por zero."
+        return n1 / n2
+
+    @staticmethod
+    def media(n1, n2):
+        return (n1 + n2) / 2
+
+    @staticmethod
+    def potenciacao(n1, n2):
+        return n1 ** n2
+
+    @staticmethod
+    def radiciacao(n1):
+        return n1 ** 0.5
+
+
+def exibir_menu():
+    print("""Bem-vindo(a) à Calculadora!
+Selecione uma operação:
     1. Soma
     2. Subtração
     3. Multiplicação
     4. Divisão
     5. Média
     6. Potenciação
-    7. Radiciação"
+    7. Radiciação
     8. Mostrar histórico de operações
     9. Limpar histórico de operações""")
-    
-    try:
+
+
+def main():
+    historico = []
+
+    operacoes = {
+        '1': Calculadora.soma,
+        '2': Calculadora.subtracao,
+        '3': Calculadora.multiplicacao,
+        '4': Calculadora.divisao,
+        '5': Calculadora.media,
+        '6': Calculadora.potenciacao,
+        '7': Calculadora.radiciacao,
+    }
+
+    while True:
+        exibir_menu()
         escolha = input("Digite sua escolha (1/2/3/4/5/6/7/8/9): ")
-    
-        if escolha in ['1', '2', '3', '4', '5', '6', '7', '8', '9']:
-            if escolha == '7':
-                num1 = float(input("Digite o número da raiz: "))
-                num2 = 0
-                print(f"Raiz de {num1} = {Calculadora.radiciação(num1)}")
-                histórico.append(Calculadora.radiciação(num1))
-                
-            if escolha == '8':
-                print(histórico)
-                
-            elif escolha == '9': histórico.clear()
-            
-            elif escolha in ['1', '2', '3', '4', '5', '6']:
-                num1 = float(input("Digite o primeiro número: "))
-                num2 = float(input("Digite o segundo número: "))
-                
-            
-                if escolha == '1':
-                    print(f"{num1} + {num2} = {Calculadora.soma(num1, num2)}")   
-                    histórico.append(Calculadora.soma(num1, num2))
-                elif escolha == '2':
-                    print(f"{num1} - {num2} = {Calculadora.subtração(num1, num2)}")
-                    histórico.append(Calculadora.subtração(num1, num2))
-                
-                elif escolha == '3':
-                    print(f"{num1} * {num2} = {Calculadora.multiplicação(num1, num2)}")
-                    histórico.append(Calculadora.multiplicação(num1, num2))
-                
-                elif escolha == '4':
-                    print(f"{num1} / {num2} = {Calculadora.divisão(num1, num2)}")
-                    histórico.append(Calculadora.divisão(num1, num2))
-                
-                elif escolha == '5':
-                    print(f"Média de {num1} e {num2} = {Calculadora.média(num1, num2)}")
-                    histórico.append(Calculadora.média(num1, num2))
-                    
-                elif escolha == '6':
-                    print(f"{num1} ^ {num2} = {Calculadora.potenciação(num1, num2)}")
-                    histórico.append(Calculadora.potenciação(num1, num2))    
-            
+
+        if escolha in operacoes:
+            try:
+                if escolha == '7': 
+                    num1 = float(input("Digite o número da raiz: "))
+                    resultado = operacoes[escolha](num1)
+                    print(f"Raiz de {num1} = {resultado}")
+                    historico.append(f"Raiz de {num1} = {resultado}")
+                else:
+                    num1 = float(input("Digite o primeiro número: "))
+                    num2 = float(input("Digite o segundo número: "))
+                    resultado = operacoes[escolha](num1, num2)
+                    print(f"Resultado: {resultado}")
+                    historico.append(f"{num1} e {num2} -> {resultado}")
+            except ValueError:
+                print("Erro: Entrada inválida. Por favor, insira números válidos.")
+
+        elif escolha == '8':  
+            print("Histórico de operações:")
+            for operacao in historico:
+                print(operacao)
+
+        elif escolha == '9':  
+            historico.clear()
+            print("Histórico limpo.")
+
         else:
-            print("Escolha uma opção válida")
-            
-    except ValueError:
-        print("Erro: Entrada inválida. Por favor, insira números válidos.")    
-        
-    proxima_operação = input("Nova ação? (s/n): ")
-    if proxima_operação.lower() != 's':
+            print("Escolha uma opção válida.")
+
+        proxima_operacao = input("Nova ação? (s/n): ").lower()
+        if proxima_operacao != 's':
             break
+
+
+if __name__ == "__main__":
+    main()
